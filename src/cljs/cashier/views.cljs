@@ -26,7 +26,7 @@
 (defn weight-button
   [num who]
   (fn [num who]
-    [:button.button.is-large {:on-click
+    [:button.button {:on-click
                               #(re-frame/dispatch
                                 [::events/record-person [(js/parseInt num)
                                                          (if (= who "Cashier")
