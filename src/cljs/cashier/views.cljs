@@ -114,12 +114,18 @@
   (let [line-list (re-frame/subscribe [::subs/weighted-line-list])]
     (fn []
       [:div.line-list
-       (if (seq? @line-list)
-         [:ul (map-indexed (fn [idx list]
-                             (let [name   (str "Line #" (:number list))
-                                   weight (:weight list)]
-                               [:li (str weight " " name)])) @line-list)]
-         [:content "No lines yet"])])))
+       (if (not-empty @line-list)
+         [:table.table
+          [:thead>tr
+           [:th "Factor"]
+           [:th "Line"]]
+          [:tbody.tbody
+           (map-indexed (fn [idx list]
+                          (let [name   (str "Line #" (:number list))
+                                weight (:weight list)
+                                first? (zero? idx)]
+                            [:tr {:class (when first? "is-selected")} [:td (str weight)] [:td (str name)]])) @line-list)]]
+         [:content "No lines yet. " [:a {:href "#/record"} "Click here to record your first one."]])])))
 
 
 ;; lines panel
@@ -134,8 +140,9 @@
       [:div
        [line-controls]]
       [:hr]
-      [:div
-       [line-list]]]]))
+      [:div.columns.is-mobile
+       [:div.column.is-half.is-offset-one-quarter
+        [line-list]]]]]))
 
 ;; main
 
