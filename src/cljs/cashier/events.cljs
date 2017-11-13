@@ -21,6 +21,13 @@
    (assoc db :show-help show)))
 
 
+(re-frame/reg-event-db
+ ::cancel-record
+ (fn [db [_ _]]
+   (assoc db
+          :active-panel :home-panel
+          :current-recording db/initial-recording)))
+
 (re-frame/reg-event-fx
  ::store-recording-and-add-new
  (fn [{db :db} [_ _]]

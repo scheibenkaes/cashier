@@ -27,11 +27,11 @@
   [num who]
   (fn [num who]
     [:button.button.is-large {:on-click
-                     #(re-frame/dispatch
-                       [::events/record-person [(js/parseInt num)
-                                                (if (= who "Cashier")
-                                                  :cashier
-                                                  :customer)]])} num]))
+                              #(re-frame/dispatch
+                                [::events/record-person [(js/parseInt num)
+                                                         (if (= who "Cashier")
+                                                           :cashier
+                                                           :customer)]])} num]))
 (defn record-weight
   [who]
   (let [recording (re-frame/subscribe [::subs/current-recording])]
@@ -44,33 +44,34 @@
                                                           inc)))]
          [:div.columns.is-mobile
           [:div.column
-           [weight-button "1" who]]
+           [weight-button "1 (Teens)" who]]
           [:div.column
-           [weight-button "2" who]]
+           [weight-button "2 (Twens)" who]]
           [:div.column
-           [weight-button "3" who]]]
+           [weight-button "3 (Thirties)" who]]]
 
          [:div.columns.is-mobile
           [:div.column
-           [weight-button "5" who]]
+           [weight-button "5 (Fourties)" who]]
           [:div.column
-           [weight-button "8" who]]
+           [weight-button "8 (Fifties)" who]]
           [:div.column
-           [weight-button "13" who]]]
+           [weight-button "13 (50+)" who]]]
 
          [:div.columns.is-mobile
-          [:div.column
+          [:div.column.is-centered.buttons
+           [:a.button {:href "#/"
+                       :on-click #(re-frame/dispatch [::events/cancel-record])} [:span.icon>i.fa.fa-ban] [:span "Discard line"]]
+           [:button.button {:on-click #(re-frame/dispatch [::events/show-help true])} [:span.icon>i.fa.fa-question-circle] [:span "Help"]]
            [:button.button {:disabled no-input-yet?
-                            :on-click #(re-frame/dispatch [::events/store-recording-and-add-new])} [:span.icon>i.fa.fa-list] [:span "New"]]]
-          [:div.column
-           [:button.button.is-large {:on-click #(re-frame/dispatch [::events/show-help true])} [:span.icon>i.fa.fa-question-circle]]]
-          [:div.column
+                            :on-click #(re-frame/dispatch [::events/store-recording-and-add-new])} [:span.icon>i.fa.fa-list] [:span "Save and add new"]]
            [:a.button {:on-click (fn [e]
                                    (if no-input-yet?
                                      (.preventDefault e)
                                      (re-frame/dispatch [::events/done-recording])))
                        :disabled no-input-yet?
-                       :href     "#/"} [:span.icon>i.fa.fa-check-square-o] [:span "Done"]]]]]))))
+                       :href     "#/"} [:span.icon>i.fa.fa-check-square-o] [:span "Done"]]
+           ]]]))))
 
 
 (defn record-stats
