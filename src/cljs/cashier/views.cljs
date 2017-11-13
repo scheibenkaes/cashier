@@ -109,6 +109,13 @@
     [:a.button {:href "#/record"}
      [:span.icon>i.fa.fa-plus] [:span "Add line"]]]])
 
+(defn format-num
+  [num]
+  (if (number? num)
+    (.toFixed num 2)
+    (str num)))
+
+
 (defn line-list
   []
   (let [line-list (re-frame/subscribe [::subs/weighted-line-list])]
@@ -122,7 +129,7 @@
           [:tbody.tbody
            (map-indexed (fn [idx list]
                           (let [name   (str "Line #" (:number list))
-                                weight (:weight list)
+                                weight (format-num (:weight list))
                                 first? (zero? idx)]
                             [:tr {:class (when first? "is-selected")} [:td (str weight)] [:td (str name)]])) @line-list)]]
          [:content "No lines yet. " [:a {:href "#/record"} "Click here to record your first one."]])])))
