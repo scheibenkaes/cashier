@@ -17,7 +17,7 @@
          [:div.modal-card
           [:header.modal-card-head
            [:button.delete {:on-click #(re-frame/dispatch [::events/show-help false])}]]
-          [:section.modal-card-body [:pre help/help-text]]
+          [:section.modal-card-body help/help-text]
           [:footer.modal-card-foot]]]))))
 
 
