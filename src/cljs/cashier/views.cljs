@@ -99,9 +99,12 @@
 (defn line-controls
   []
   [:div.columns.is-mobile
-   [:div.column.is-half
+   [:div.column.is-one-third
     [:button.button {:on-click #(re-frame/dispatch [::events/reset-lines])} [:span.icon>i.fa.fa-eraser] [:span "Reset"]]]
-   [:div.column.is-half
+   [:div.column.is-one-third
+    [:button.button {:on-click #(re-frame/dispatch [::events/show-help true])}
+     [:span.icon>i.fa.fa-question-circle] [:span "Help"]]]
+   [:div.column.is-one-third
     [:a.button {:href "#/record"}
      [:span.icon>i.fa.fa-plus] [:span "Add line"]]]])
 
@@ -124,7 +127,7 @@
   []
   (fn []
     [:section.section.is-medium
-
+     [help-dialog]
      [:div.container.is-fluid
       [:div.title.is-4 "Compare Lines"]
       [:div
